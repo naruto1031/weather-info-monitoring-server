@@ -1,39 +1,27 @@
-import { initializeApp } from 'firebase/app';
-import * as admin from 'firebase-admin';
-import * as dotenv from 'dotenv'
+import admin from 'firebase-admin';
+import { LocationData } from '../model/location_data';
+import serviseAccount from '../../serviceAccountKey.json';
 
-dotenv.config();
-
-const firebaseConfig = {
-    apiKey: process.env.API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
-    projectId: process.env.PROJECT_ID,
-    storageBucket: process.env.STORE_BUCKET,
-    messagingSenderId: process.env.MESSAGING_SENDER_ID,
-    appId: process.env.APP_ID,
-    measurementId: process.env.MEASUREMENT_ID,
-};
+admin.initializeApp({
+    credential: admin.credential.cert(serviseAccount as admin.ServiceAccount)
+});
 
 export class FirestoreManager {
-    private firestore: any;
+    private firestore: FirebaseFirestore.Firestore = admin.firestore();
 
-    FirestoreManager() {
-        const app = initializeApp(firebaseConfig);
-        this.firestore = admin.firestore(app);
-    }
-
-    async getDocument(collection: string, id: string) {
+    public async getLocationData(collection: string, id: string) {
         const doc = await this.firestore.collection(collection).doc(id).get();
         return doc.data();
     }
 
-    async setDocument(collection: string, id: string, data: any) {
-        const doc = await this.firestore.collection(collection).doc(id).set(data);
-        return doc;
-    }
+    public async setLocationData({ collectionId, documentId, data }: { collectionId: string, documentId: string, data: LocationData }) {
+        console.log(`👑 setLocationData: { id: ${data.id}, location: (${data.location.latitude}, ${data.location.longitude}) }`);
 
-    async updateDocument(collection: string, id: string, data: any) {
-        const doc = await this.firestore.collection(collection).doc(id).update(data);
-        return doc;
+        const field = {
+            id: data.id,
+            location: data.location,
+        };
+
+        await this.firestore.collection(collectionId).doc(documentId).set(field);
     }
 }
