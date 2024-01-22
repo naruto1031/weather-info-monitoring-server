@@ -18,9 +18,13 @@ export class CronManager {
     }
 
     private async push() {
-        const locationData: LocationData = await this.gpsManager.getLocationData();
+        const locationData: LocationData = await this.gpsManager.getLocationFromGPS();
 
-        await this.firestoreManager.setLocationData({ collectionId: Strings.COLLECTION_ID, documentId: Strings.DOCUMENT_ID, data: locationData });
+        await this.firestoreManager.setLocationData({
+            collectionId: Strings.COLLECTION_ID,
+            documentId: Strings.DOCUMENT_ID,
+            data: locationData
+        });
     }
 
     public async start() {

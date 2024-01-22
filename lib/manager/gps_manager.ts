@@ -8,7 +8,7 @@ export class GPSManager {
         return timestamp;
     }
 
-    public async getLocationData() {
+    public async getLocationFromGPS() {
         /// GPSから取得した座標
         const GPSdata = {
             latitude: 35.681236,
