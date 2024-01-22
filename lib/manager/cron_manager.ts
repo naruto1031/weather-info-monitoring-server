@@ -1,12 +1,16 @@
 import cron from "node-cron";
-import { FirestoreManager } from "./manager/firestore_manager";
-import { LocationData } from "./model/location_data";
-import { GPSManager } from "./manager/gps_manager";
-import { Strings } from "./constant/strings";
+import { FirestoreManager } from "./firestore_manager";
+import { LocationData } from "../model/location_data";
+import { GPSManager } from "./gps_manager";
+import { Strings } from "../constant/strings";
 
-export class Cron {
+export class CronManager {
     private firestoreManager: FirestoreManager;
     private gpsManager: GPSManager;
+
+    private mainCron: cron.ScheduledTask = cron.schedule("* * * * *", () => {
+        this.push();
+    }, { scheduled: false, timezone: "Asia/Tokyo" });
 
     constructor() {
         this.firestoreManager = new FirestoreManager();
@@ -21,10 +25,6 @@ export class Cron {
 
     public async start() {
         console.log(Strings.CRON_START_TEXT);
-
-        /// 毎分実行
-        cron.schedule("* * * * *", () => {
-            this.push();
-        }, { timezone: "Asia/Tokyo" });
+        this.mainCron.start();
     }
 }

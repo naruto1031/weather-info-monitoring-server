@@ -18,5 +18,5 @@ export class Strings {
     ╰───────────────────────────────────────────────────────────────────╯
     `;
 
-    public static readonly CRON_START_TEXT: string = '🏃 Cron started. 🏃';
+    public static readonly CRON_START_TEXT: string = "🏃 Cron started. 🏃";
 }

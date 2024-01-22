@@ -1,9 +1,9 @@
 import { Strings } from "./lib/constant/strings";
-import { Cron } from "./lib/cron";
+import { CronManager } from "./lib/manager/cron_manager";
 
 function main(): void {
     console.log(Strings.APP_RUN_TEXT);
-    new Cron().start();
+    new CronManager().start();
 }
 
 main();
