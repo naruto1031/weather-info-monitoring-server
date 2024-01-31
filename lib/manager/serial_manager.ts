@@ -30,6 +30,7 @@ export class SerialManager {
                 console.log(`latitude: ${latitudeData}`);
                 console.log(`longitude: ${longitudData}`);
             }
+            return;
         });
     }
 }
