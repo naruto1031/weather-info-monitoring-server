@@ -31,7 +31,8 @@ export class SerialManager {
                     console.log(`latitude: ${latitudeData}`);
                     console.log(`longitude: ${longitudData}`);
 
-                    this.parser.destroy();
+                    /// serialPortを終了
+                    this.serial.close();
                 }
             });
             this.parser.on("close", () => {
