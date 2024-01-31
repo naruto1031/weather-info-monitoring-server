@@ -32,11 +32,10 @@ export class SerialManager {
                     console.log(`longitude: ${longitudData}`);
 
                     /// serialPortを終了
-                    this.serial.close();
+                    // this.serial.close();
+                    this.parser.destroy();
+                    resolve();
                 }
-            });
-            this.parser.on("close", () => {
-                resolve();
             });
         });
     }
