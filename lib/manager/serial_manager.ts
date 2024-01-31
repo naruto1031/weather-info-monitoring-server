@@ -12,7 +12,15 @@ export class SerialManager {
 
     public async start() {
         this.parser.on("data", (data) => {
-            console.log(data);
+            if (data.indexOf("$GNGGA") !== -1) {
+                const firstData = data.split(",")[0];
+                const latitude = data.split(",")[3];
+                const longitude = data.split(",")[5];
+
+                console.log(`firstData: ${firstData}`);
+                console.log(`latitude: ${latitude}`);
+                console.log(`longitude: ${longitude}`);
+            }
         });
     }
 }
