@@ -12,26 +12,31 @@ export class SerialManager {
     }
 
     public async setCoodinateFromParser() {
-        this.parser.on("data", (data: String) => {
-            if (data.indexOf("$GNGGA") !== -1) {
-                /// index of latitude and longitude
-                const INDEX_OF_LATITUDE = 3;
-                const INDEX_OF_LONGITUDE = 5;
+        return new Promise<void>((resolve, reject) => {
+            this.parser.on("data", (data: String) => {
+                if (data.indexOf("$GNGGA") !== -1) {
+                    /// index of latitude and longitude
+                    const INDEX_OF_LATITUDE = 3;
+                    const INDEX_OF_LONGITUDE = 5;
 
-                /// GPSから取得した座標
-                const latitudeData = data.split(",")[INDEX_OF_LATITUDE];
-                const longitudData = data.split(",")[INDEX_OF_LONGITUDE];
+                    /// GPSから取得した座標
+                    const latitudeData = data.split(",")[INDEX_OF_LATITUDE];
+                    const longitudData = data.split(",")[INDEX_OF_LONGITUDE];
 
-                /// GPSManagerに座標をセット
-                GPSManager.latitude = latitudeData.length == 0 ? 0 : Number(latitudeData);
-                GPSManager.longitude = longitudData.length == 0 ? 0 : Number(longitudData);
+                    /// GPSManagerに座標をセット
+                    GPSManager.latitude = latitudeData.length == 0 ? 0 : Number(latitudeData);
+                    GPSManager.longitude = longitudData.length == 0 ? 0 : Number(longitudData);
 
-                /// Debug
-                console.log(`latitude: ${latitudeData}`);
-                console.log(`longitude: ${longitudData}`);
+                    /// Debug
+                    console.log(`latitude: ${latitudeData}`);
+                    console.log(`longitude: ${longitudData}`);
 
-                this.parser.destroy();
-            }
+                    this.parser.destroy();
+                }
+            });
+            this.parser.on("close", () => {
+                resolve();
+            });
         });
     }
 }

@@ -17,6 +17,8 @@ export class GPSManager {
         const serialManager = new SerialManager();
         await serialManager.setCoodinateFromParser();
 
+        console.log('awaitしてる？？');
+
         const GPSdata = {
             latitude: GPSManager.latitude,
             longitude: GPSManager.longitude,
