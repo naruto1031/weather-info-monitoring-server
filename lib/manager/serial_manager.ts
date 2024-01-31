@@ -24,8 +24,8 @@ export class SerialManager {
                     const longitudData = data.split(",")[INDEX_OF_LONGITUDE];
 
                     /// GPSManagerに座標をセット
-                    GPSManager.latitude = latitudeData.length == 0 ? 0 : Number(latitudeData);
-                    GPSManager.longitude = longitudData.length == 0 ? 0 : Number(longitudData);
+                    GPSManager.latitude = latitudeData.length == 0 ? 35.681236 : Number(latitudeData);
+                    GPSManager.longitude = longitudData.length == 0 ? 139.767125 : Number(longitudData);
 
                     /// Debug
                     console.log(`latitude: ${latitudeData}`);
