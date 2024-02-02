@@ -7,7 +7,7 @@ export class SerialManager {
     private parser: ReadlineParser;
 
     constructor() {
-        this.serial = new SerialPort({ 'path': "/dev/ttyUSB1", 'baudRate': 9600 });
+        this.serial = new SerialPort({ 'path': "/dev/ttyUSB0", 'baudRate': 9600 });
         this.parser = this.serial.pipe(new ReadlineParser({ delimiter: "\r\n" }));
     }
 
@@ -32,7 +32,7 @@ export class SerialManager {
                     console.log(`longitude: ${longitudData}`);
 
                     /// serialPortを終了
-                    // this.serial.close();
+                    this.serial.close();
                     this.parser.destroy();
                     resolve();
                 }
