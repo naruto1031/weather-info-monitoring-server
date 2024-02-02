@@ -13,6 +13,8 @@ export class SerialManager {
 
     public async paserListener() {
         this.parser.on("data", (data: String) => {
+            console.log(data);
+            
             if (data.indexOf("$GNGGA") !== -1) {
                 /// index of latitude and longitude
                 const INDEX_OF_LATITUDE = 3;
