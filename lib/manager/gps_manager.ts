@@ -15,7 +15,7 @@ export class GPSManager {
     public async getLocationFromGPS() {
         /// GPSから取得した座標
         const serialManager = new SerialManager();
-        // await serialManager.setCoodinateFromParser();
+        await serialManager.setCoodinateFromParser();
 
         console.log('awaitしてる？？');
 
